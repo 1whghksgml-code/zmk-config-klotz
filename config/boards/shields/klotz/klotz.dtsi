@@ -84,25 +84,27 @@
 &pinctrl {
     pwm0_default: pwm0_default {
         group1 {
+            /* 모든 핀을 OUT0 채널 하나에 할당하여 동일한 PWM 신호를 출력하게 함 */
             psels = <NRF_PSEL(PWM_OUT0, 0, 20)>,  // D3
-                    <NRF_PSEL(PWM_OUT1, 0, 22)>,  // D4
-                    <NRF_PSEL(PWM_OUT2, 0, 24)>;  // D5
-        };
+                    <NRF_PSEL(PWM_OUT0, 0, 22)>,  // D4
+                    <NRF_PSEL(PWM_OUT0, 0, 24)>;  // D5
+        }
     };
     pwm0_sleep: pwm0_sleep {
         group1 {
             psels = <NRF_PSEL(PWM_OUT0, 0, 20)>,
-                    <NRF_PSEL(PWM_OUT1, 0, 22)>,
-                    <NRF_PSEL(PWM_OUT2, 0, 24)>;
+                    <NRF_PSEL(PWM_OUT0, 0, 22)>,
+                    <NRF_PSEL(PWM_OUT0, 0, 24)>;
             low-power-enable;
         };
     };
 };
 
 &pwm0 {
-    compatible = "nordic,nrf-pwm"; /* 이 줄이 있는지 확인하세요 */
     status = "okay";
     pinctrl-0 = <&pwm0_default>;
     pinctrl-1 = <&pwm0_sleep>;
     pinctrl-names = "default", "sleep";
+    /* 드라이버에 따라 compatible이 필요할 수 있음 */
+    compatible = "nordic,nrf-pwm";
 };

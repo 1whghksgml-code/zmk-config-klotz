@@ -59,5 +59,21 @@
 	sensors {
 		compatible = "zmk,keymap-sensors";
 		sensors = <&left_encoder &right_encoder>;
+
 	};
+    leds{
+compatible = "gpio-leds";
+        led_d3: led_0 {
+            gpios = <&pro_micro 3 GPIO_ACTIVE_HIGH>; // D3 / P0.20
+            label = "Indicator 1";
+        };
+        led_d4: led_1 {
+            gpios = <&pro_micro 4 GPIO_ACTIVE_HIGH>; // D4 / P0.22
+            label = "Indicator 2";
+        };
+        led_d5: led_2 {
+            gpios = <&pro_micro 5 GPIO_ACTIVE_HIGH>; // D5 / P0.24
+            label = "Indicator 3";
+        };
+    };
 };

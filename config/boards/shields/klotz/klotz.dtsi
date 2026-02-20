@@ -79,3 +79,30 @@
 		sensors = <&left_encoder &right_encoder>;
 	};
 };
+/* 파일 하단, 루트 블록( / { ... }; ) 바깥에 위치해야 함 */
+
+&pinctrl {
+    pwm0_default: pwm0_default {
+        group1 {
+            psels = <NRF_PSEL(PWM_OUT0, 0, 20)>,  // D3
+                    <NRF_PSEL(PWM_OUT1, 0, 22)>,  // D4
+                    <NRF_PSEL(PWM_OUT2, 0, 24)>;  // D5
+        };
+    };
+    pwm0_sleep: pwm0_sleep {
+        group1 {
+            psels = <NRF_PSEL(PWM_OUT0, 0, 20)>,
+                    <NRF_PSEL(PWM_OUT1, 0, 22)>,
+                    <NRF_PSEL(PWM_OUT2, 0, 24)>;
+            low-power-enable;
+        };
+    };
+};
+
+&pwm0 {
+    compatible = "nordic,nrf-pwm"; /* 이 줄이 있는지 확인하세요 */
+    status = "okay";
+    pinctrl-0 = <&pwm0_default>;
+    pinctrl-1 = <&pwm0_sleep>;
+    pinctrl-names = "default", "sleep";
+};

@@ -10,28 +10,46 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
       - name: Install yaml2json
         run: python3 -m pip install remarshal
       - id: set-matrix
+        name: Fetch Build Matrix
         run: |
           matrix=$(yaml2json build.yaml | jq -c .)
-          echo "matrix=${matrix}" >> $GITHUB_OUTPUT
-
+          yaml2json build.yaml
+          echo "::set-output name=matrix::${matrix}"
   build:
     runs-on: ubuntu-latest
     container:
       image: zmkfirmware/zmk-build-arm:stable
     needs: matrix
+    name: Build
     strategy:
       fail-fast: false
       matrix: ${{fromJson(needs.matrix.outputs.matrix)}}
     steps:
+      - name: Prepare variables
+        id: variables
+        run: |
+          if [ -n "${{ matrix.shield }}" ]; then
+            EXTRA_CMAKE_ARGS="-DSHIELD=${{ matrix.shield }}"
+            ARTIFACT_NAME="${{ matrix.shield }}-${{ matrix.board }}-zmk"
+            DISPLAY_NAME="${{ matrix.shield }} - ${{ matrix.board }}"
+          else
+            EXTRA_CMAKE_ARGS=
+            DISPLAY_NAME="${{ matrix.board }}"
+            ARTIFACT_NAME="${{ matrix.board }}-zmk"
+          fi
+          echo ::set-output name=extra-cmake-args::${EXTRA_CMAKE_ARGS}
+          echo ::set-output name=artifact-name::${ARTIFACT_NAME}
+          echo ::set-output name=display-name::${DISPLAY_NAME}
       - name: Checkout
-        uses: actions/checkout@v4
-
+        uses: actions/checkout@v2
       - name: Cache west modules
         uses: actions/cache@v4
+        env:
+          cache-name: cache-zephyr-modules
         with:
           path: |
             modules/
@@ -39,23 +57,34 @@ jobs:
             zephyr/
             bootloader/
             zmk/
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/west.yml') }}
-
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('manifest-dir/west.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
       - name: West Init
         run: west init -l config
       - name: West Update
         run: west update
       - name: West Zephyr export
         run: west zephyr-export
-
-      - name: West Build
+      - name: West Build (${{ steps.variables.outputs.display-name }})
         run: |
-          west build -s zmk/app -b ${{ matrix.board }} -- -DZMK_CONFIG=${GITHUB_WORKSPACE}/config -DSHIELD=${{ matrix.shield }}
-
-      - name: Archive
+          west build -s zmk/app -b ${{ matrix.board }} -- -DZMK_CONFIG=${GITHUB_WORKSPACE}/config ${{ steps.variables.outputs.extra-cmake-args }} ${{ matrix.cmake-args }}
+      - name: ${{ steps.variables.outputs.display-name }} Kconfig file
+        run: cat build/zephyr/.config | grep -v "^#" | grep -v "^$"
+      - name: Rename artifacts
+        run: |
+          mkdir build/artifacts
+          if [ -f build/zephyr/zmk.uf2 ]
+          then
+            cp build/zephyr/zmk.uf2 "build/artifacts/${{ steps.variables.outputs.artifact-name }}.uf2"
+          elif [ -f build/zephyr/zmk.hex ]
+          then
+            cp build/zephyr/zmk.hex "build/artifacts/${{ steps.variables.outputs.artifact-name }}.hex"
+          fi
+      - name: Archive (${{ steps.variables.outputs.display-name }})
         uses: actions/upload-artifact@v4
         with:
-          # 파일명을 수동으로 지정하지 않고 고정값으로 테스트합니다.
-          name: firmware-${{ matrix.shield }}
-          # 빌드 결과물이 생성되는 정확한 위치를 직접 지정합니다.
-          path: build/zephyr/zmk.uf2
+          name: firmware-${{ matrix.os }}-${{ strategy.job-index }}
+          path: build/artifacts

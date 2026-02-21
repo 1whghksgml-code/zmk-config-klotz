@@ -86,5 +86,5 @@ jobs:
       - name: Archive (${{ steps.variables.outputs.display-name }})
         uses: actions/upload-artifact@v4
         with:
-          name: firmware-${{ matrix.os }}-${{ strategy.job-index }}
+          name: firmware-${{ matrix.os }}-${{ strategy.job-index }}.zip
           path: build/artifacts

@@ -83,8 +83,10 @@ jobs:
           then
             cp build/zephyr/zmk.hex "build/artifacts/${{ steps.variables.outputs.artifact-name }}.hex"
           fi
-      - name: Archive (${{ steps.variables.outputs.display-name }})
+     - name: Archive (${{ steps.variables.outputs.display-name }})
         uses: actions/upload-artifact@v4
         with:
-          name: firmware-${{ matrix.os }}-${{ strategy.job-index }}
+          # name을 고정값 대신 유연하게 설정하면 찾기 쉽습니다.
+          name: ${{ steps.variables.outputs.artifact-name }}
+          # build/artifacts 폴더 '안'에 있는 모든 uf2 파일을 가져오도록 지정
           path: build/artifacts/*.uf2

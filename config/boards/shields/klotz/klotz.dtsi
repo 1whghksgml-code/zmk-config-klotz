@@ -34,7 +34,7 @@
             ;
     };
 
-    pwmleds {
+    pwmleds: pwmleds {
         compatible = "pwm-leds";
         led_d3: led_0 {
             pwms = <&pwm0 0 PWM_MSEC(20) PWM_POLARITY_NORMAL>;

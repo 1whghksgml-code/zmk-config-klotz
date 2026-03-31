@@ -137,7 +137,7 @@
             label = "BASE";
             bindings = <
 &kp Q          &kp W          &kp E           &kp R            &kp T      &kp Y            &kp U           &kp I                  &kp O              &kp P
-&lt_mt LGUI A  &lt_mt LALT S  &lt_mt LCTRL D  &lt_mt LSHIFT F  &kp G      &kp H            &lt_mt RSHFT J  &lt_mt LEFT_CONTROL K  &lt_mt LEFT_ALT L  &kp SEMICOLON
+&lt_mt LGUI A  &lt_mt LALT S  &lt_mt LCTRL D  &lt_mt LSHIFT F  &kp G      &kp H            &lt_mt RSHFT J  &lt_mt LEFT_CONTROL K  &lt_mt LEFT_ALT L  &lt_mt RIGHT_WIN SEMICOLON
 &kp Z          &kp X          &kp C           &kp V            &kp B      &kp N            &kp M           &kp COMMA              &kp DOT            &kp FSLH
                                               &lt 4 DELETE     &lt 1 RET  &lt 2 BACKSPACE  &kp SPACE
             >;
@@ -148,10 +148,10 @@
         nav_layer {
             label = "NAVI";
             bindings = <
-&kp ESC       &trans        &none             &kp LC(KP_MINUS)  &kp LC(KP_PLUS)  &none           &none             &kp UP_ARROW  &none            &kp ESC
-&kp LEFT_WIN  &kp LEFT_ALT  &kp LEFT_CONTROL  &kp LEFT_SHIFT    &kp LANGUAGE_2   &kp LANGUAGE_1  &kp LEFT_ARROW    &kp DOWN      &kp RIGHT_ARROW  &kp PG_UP
-&none         &trans        &trans            &trans            &trans           &kp CAPS        &kp LG(DOT)       &kp HOME      &kp END          &kp PG_DN
-                                              &trans            &trans           &mo 3           &kp LEFT_CONTROL
+&kp ESC       &trans        &none             &kp LC(LEFT)    &kp LC(RIGHT)   &none           &none           &kp UP_ARROW  &none            &kp ESC
+&kp LEFT_WIN  &kp LEFT_ALT  &kp LEFT_CONTROL  &kp LEFT_SHIFT  &kp LANGUAGE_2  &kp LANGUAGE_1  &kp LEFT_ARROW  &kp DOWN      &kp RIGHT_ARROW  &kp PG_UP
+&none         &trans        &trans            &trans          &trans          &kp CAPS        &kp LG(DOT)     &kp HOME      &kp END          &kp PG_DN
+                                              &trans          &trans          &mo 3           &kp TAB
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
@@ -160,10 +160,10 @@
         sym_layer {
             label = "SYM";
             bindings = <
-&kp GRAVE  &kp LT    &kp GT     &kp DQT    &kp SQT    &kp MINUS  &kp N7  &kp N8  &kp N9  &kp BSLH
-&kp LGUI   &kp LALT  &kp LCTRL  &kp LSHFT  &kp HASH   &kp EQUAL  &kp N5  &kp N6  &kp N7  &kp APOS
-&kp CARET  &kp FSLH  &kp ASTRK  &kp BSLH   &kp UNDER  &kp COLON  &kp N1  &kp N2  &kp N3  &kp FSLH
-                                &trans     &mo 3      &trans     &kp N0
+&kp GRAVE  &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &none      &none  &kp MINUS  &kp N7  &kp N8  &kp N9  &kp BSLH
+&kp LGUI   &kp LALT          &kp LCTRL          &kp LSHFT  &none  &kp EQUAL  &kp N5  &kp N6  &kp N7  &kp APOS
+&none      &none             &none              &none      &none  &kp COLON  &kp N1  &kp N2  &kp N3  &kp FSLH
+                                                &trans     &mo 3  &trans     &kp N0
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
@@ -172,10 +172,10 @@
         adjust_layer {
             label = "ADJ";
             bindings = <
-&bt BT_SEL 0  &bt BT_SEL 1  &out OUT_TOG  &trans  &trans  &kp F1   &kp F2   &kp F3  &kp F4  &kp F5
-&bt BT_CLR    &bt BT_NXT    &none         &trans  &trans  &kp F6   &kp F7   &kp F8  &kp F9  &kp F10
-&trans        &bt BT_PRV    &trans        &trans  &trans  &kp F11  &kp F12  &trans  &trans  &trans
-                                          &trans  &trans  &trans   &trans
+&bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &out OUT_TOG  &none   &kp F1   &kp F2   &kp F3  &kp F4  &kp F5
+&none         &none         &none         &bt BT_CLR    &none   &kp F6   &kp F7   &kp F8  &kp F9  &kp F10
+&none         &none         &none         &none         &none   &kp F11  &kp F12  &none   &none   &none
+                                          &trans        &trans  &trans   &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
@@ -203,15 +203,6 @@
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
-        };
-
-        layer_6 {
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-                        &trans  &trans  &trans  &trans
-            >;
         };
     };
 };

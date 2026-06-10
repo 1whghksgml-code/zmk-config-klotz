@@ -153,7 +153,7 @@
         nav_layer {
             label = "NAVI";
             bindings = <
-&kp ESC       &trans        &none             &kp LC(LEFT)    &kp LC(RIGHT)   &none           &none           &kp UP_ARROW  &none            &kp ESC
+&kp ESC       &trans        &none             &kp LC(LEFT)    &kp LC(RIGHT)   &kp RIGHT_ALT   &none           &kp UP_ARROW  &none            &kp ESC
 &kp LEFT_WIN  &kp LEFT_ALT  &kp LEFT_CONTROL  &kp LEFT_SHIFT  &kp LANGUAGE_2  &kp LANGUAGE_1  &kp LEFT_ARROW  &kp DOWN      &kp RIGHT_ARROW  &kp PG_UP
 &none         &trans        &trans            &trans          &trans          &kp CAPS        &kp LG(DOT)     &kp HOME      &kp END          &kp PG_DN
                                               &trans          &trans          &mo 3           &kp TAB

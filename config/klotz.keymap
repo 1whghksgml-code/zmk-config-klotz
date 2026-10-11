@@ -106,7 +106,7 @@
         };
 
         tab {
-            bindings = <&kp TAB>;
+            bindings = <&kp DEL>;
             key-positions = <30 31>;
             layers = <0>;
         };
@@ -119,6 +119,11 @@
         game {
             bindings = <&tog 6>;
             key-positions = <0 9 4 5>;
+        };
+
+        han-yung,capslock {
+            bindings = <&kp LANGUAGE_1>;
+            key-positions = <15 16>;
         };
     };
 
@@ -144,7 +149,7 @@
 &kp Q          &kp W          &kp E           &kp R            &kp T      &kp Y            &kp U           &kp I                  &kp O              &kp P
 &lt_mt LGUI A  &lt_mt LALT S  &lt_mt LCTRL D  &lt_mt LSHIFT F  &kp G      &kp H            &lt_mt RSHFT J  &lt_mt LEFT_CONTROL K  &lt_mt LEFT_ALT L  &lt_mt RIGHT_WIN SEMICOLON
 &kp Z          &kp X          &kp C           &kp V            &kp B      &kp N            &kp M           &kp COMMA              &kp DOT            &kp FSLH
-                                              &lt 4 DELETE     &lt 1 RET  &lt 2 BACKSPACE  &kp SPACE
+                                              &lt 4 TAB        &lt 1 RET  &lt 2 BACKSPACE  &kp SPACE
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOLUME_DOWN C_VOLUME_UP>;
